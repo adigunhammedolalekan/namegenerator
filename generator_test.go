@@ -35,4 +35,5 @@ func TestNameGenerator_Generate(t *testing.T) {
 	if name == "" {
 		t.Fatalf("Expected a new name but got a blank string")
 	}
+	t.Log(name)
 }

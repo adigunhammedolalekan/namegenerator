@@ -18,8 +18,10 @@
 package namegenerator
 
 import (
+	"crypto/md5"
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 // Generator ...
@@ -37,9 +39,14 @@ func (rn *NameGenerator) Generate() string {
 	randomAdjective := ADJECTIVES[rn.random.Intn(len(ADJECTIVES))]
 	randomNoun := NOUNS[rn.random.Intn(len(NOUNS))]
 
-	randomName := fmt.Sprintf("%v-%v", randomAdjective, randomNoun)
-
+	randomName := fmt.Sprintf("%v-%v-%s", randomAdjective, randomNoun, rn.randomString())
 	return randomName
+}
+
+func (rn *NameGenerator) randomString() string {
+	m := md5.New()
+	m.Write([]byte(time.Now().String()))
+	return fmt.Sprintf("%x", m.Sum(nil))[:8]
 }
 
 // NewNameGenerator ...
